@@ -10,8 +10,8 @@ class App extends React.Component {
          provider={PROVIDER_GOOGLE}
          showsUserLocation
          initialRegion={{
-         latitude: 37.78825,
-         longitude: -122.4324,
+         latitude: 29.0350,
+         longitude: -81.3032,
          latitudeDelta: 0.0922,
          longitudeDelta: 0.0421}}
       />
