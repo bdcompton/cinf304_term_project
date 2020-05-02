@@ -62,7 +62,7 @@ class App extends React.Component {
   onMapPress = (e) => {
     this.setState({
       coordinates: [
-        this.state.coordinates[this.state.coordinates.length-1],
+        this.state.coordinates[0],
         e.nativeEvent.coordinate,
       ],
     });
@@ -96,8 +96,15 @@ class App extends React.Component {
   }
 
   callback = (currency) => {
-
+    this.setState({
+      coordinates : [
+        currency,
+        "Sage Hall, Deland, FL, USA",
+      ]
+    });
   }
+
+  
 
   render() {
     

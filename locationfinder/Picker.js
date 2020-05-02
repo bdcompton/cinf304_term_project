@@ -16,7 +16,7 @@ const Pick = ({parentCallBack}) => {
         
         <Picker
           selectedValue={currency}
-          onValueChange={currentCurrency => setCurrency(currentCurrency)}>
+          onValueChange={currentCurrency => parentCallBack(currentCurrency)}>
         {
                  locData.map((item) =>{
                    return(
@@ -26,7 +26,7 @@ const Pick = ({parentCallBack}) => {
         }
         </Picker>
         <Text>
-          Selected: {currency}
+          Pick a starting point
         </Text>
       </View>
     </View>
