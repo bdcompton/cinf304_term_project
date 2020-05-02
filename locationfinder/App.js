@@ -1,7 +1,11 @@
-import React, { Component } from 'react';
-import { Dimensions, Platform, StyleSheet, Text, View } from 'react-native';
+import React, { Component,useState } from 'react';
+import { Dimensions, Platform, StyleSheet, Text, View, Button } from 'react-native';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
+import { Callout } from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
+
+import locationData from './locations.json';
+import Picker from './Picker.js';
 
 const { width, height } = Dimensions.get('window');
 const ASPECT_RATIO = width / height;
@@ -9,6 +13,7 @@ const LATITUDE = 29.0350;
 const LONGITUDE = -81.3032;
 const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
+
 
 const GOOGLE_MAPS_APIKEY = 'AIzaSyDgin3KRnxNZ6qGnvBoI8bbDxDykNqxgMU';
 
@@ -39,6 +44,8 @@ class App extends React.Component {
     super(props);
 
     this.state = {
+      names: [locationData.name],
+      positions: [locationData.position],
       coordinates: [
         "Flagler Hall, Deland, FL, USA",
         "Sage Hall, Deland, FL, USA",
@@ -48,10 +55,14 @@ class App extends React.Component {
     this.mapView = null;
   }
 
+  onChange = (itemValue, itemIndex) => {
+    // Set the state here and update as required
+  }
+
   onMapPress = (e) => {
     this.setState({
       coordinates: [
-        ...this.state.coordinates,
+        this.state.coordinates[this.state.coordinates.length-1],
         e.nativeEvent.coordinate,
       ],
     });
@@ -80,9 +91,20 @@ class App extends React.Component {
     });
   }
 
+  myFunction() {
+    console.log(this.state.currency);
+  }
+
+  callback = (currency) => {
+
+  }
+
   render() {
+    
     return (
+      
       <View style={StyleSheet.absoluteFill}>
+      
       <MapView
          style={{ flex: 1 }}
          provider={PROVIDER_GOOGLE}
@@ -100,7 +122,7 @@ class App extends React.Component {
             origin={this.state.coordinates[0]}
             destination={this.state.coordinates[this.state.coordinates.length-1]}
             waypoints={this.state.coordinates.slice(1,-1)}
-            mode='DRIVING'
+            mode='WALKING'
             apikey={GOOGLE_MAPS_APIKEY}
             language='en'
             strokeWidth={4}
@@ -115,6 +137,10 @@ class App extends React.Component {
             resetOnChange={false}
           />
         </MapView>
+        <Callout>
+        <Picker parentCallBack={this.callback}/>
+        </Callout>
+
         <View style={styles.versionBox}>
           <Text style={styles.versionText}>RN {reactNativeVersionString}, RNM: {reactNativeMapsVersion}, RNMD: {reactNativeMapsDirectionsVersion}</Text>
         </View> 
