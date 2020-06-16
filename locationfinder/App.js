@@ -5,7 +5,8 @@ import { Callout } from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
 
 import locationData from './locations.json';
-import Picker from './Picker.js';
+import Picker1 from './Picker.js';
+import Picker2 from './PickerDestination.js';
 
 const { width, height } = Dimensions.get('window');
 const ASPECT_RATIO = width / height;
@@ -96,13 +97,15 @@ class App extends React.Component {
   }
 
   callback = (currency) => {
-    this.setState({
-      coordinates : [
-        currency,
-        "Sage Hall, Deland, FL, USA",
-      ]
-    });
-  }
+    this.state.coordinates[0] = currency;
+    this.forceUpdate();
+      }
+
+
+  callback2 = (currency) => {
+    this.state.coordinates[1] = currency;
+    this.forceUpdate();
+      }
 
   
 
@@ -145,7 +148,8 @@ class App extends React.Component {
           />
         </MapView>
         <Callout>
-        <Picker parentCallBack={this.callback}/>
+        <Picker1 parentCallBack={this.callback}/>
+        <Picker2 parentCallBack={this.callback2}/>
         </Callout>
 
         <View style={styles.versionBox}>
