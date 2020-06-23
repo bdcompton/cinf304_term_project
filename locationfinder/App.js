@@ -1,12 +1,21 @@
 import React, { Component,useState } from 'react';
 import { Dimensions, Platform, StyleSheet, Text, View, Button } from 'react-native';
-import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
+import MapView, {
+  Marker,
+  AnimatedRegion,
+  Polyline,
+  PROVIDER_GOOGLE
+} from "react-native-maps";
 import { Callout } from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
+import BackgroundGeolocation from "react-native-background-geolocation";
+import * as Location from 'expo-location';
+import * as Permissions from 'expo-permissions';
 
 import locationData from './locations.json';
 import Picker1 from './Picker.js';
 import Picker2 from './PickerDestination.js';
+import Picker3 from './PickerMultiple.js';
 
 const { width, height } = Dimensions.get('window');
 const ASPECT_RATIO = width / height;
@@ -25,22 +34,8 @@ const reactNativeVersionString = reactNativeVersion ? `${reactNativeVersion.majo
 const reactNativeMapsVersion = require('./node_modules/react-native-maps/package.json').version;
 const reactNativeMapsDirectionsVersion = require('./node_modules/react-native-maps-directions/package.json').version;
 
-const styles = StyleSheet.create({
-  versionBox: {
-    position: 'absolute',
-    bottom: 0,
-    right: 0,
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-  },
-  versionText: {
-    padding: 4,
-    backgroundColor: '#FFF',
-    color: '#000',
-  },
-});
-
-class App extends React.Component {
+export default class App extends React.Component {
+  
   constructor(props) {
     super(props);
 
@@ -52,11 +47,12 @@ class App extends React.Component {
         "Sage Hall, Deland, FL, USA",
       ],
     };
-
+    
     this.mapView = null;
+    
   }
 
-  onChange = (itemValue, itemIndex) => {
+  onChange = (itemValue, itemIndex) => {  
     // Set the state here and update as required
   }
 
@@ -99,18 +95,26 @@ class App extends React.Component {
   callback = (currency) => {
     this.state.coordinates[0] = currency;
     this.forceUpdate();
-      }
+  }
 
 
   callback2 = (currency) => {
     this.state.coordinates[1] = currency;
     this.forceUpdate();
-      }
+  }
 
-  
+  callback3 = (currency) => {
+    this.state.coordinates[this.state.coordinates.length] = currency;
+    this.forceUpdate();
+  }
+
+  buttonCallback = () => {
+    this.setState({coordinates: []});
+    this.forceUpdate();
+  }
 
   render() {
-    
+
     return (
       
       <View style={StyleSheet.absoluteFill}>
@@ -150,8 +154,16 @@ class App extends React.Component {
         <Callout>
         <Picker1 parentCallBack={this.callback}/>
         <Picker2 parentCallBack={this.callback2}/>
+        <Picker3 parentCallBack={this.callback3}/>
         </Callout>
-
+        <View style={styles.bottom}>
+        <Button
+        onPress={this.buttonCallback}
+        title="Reset path"
+        color="#841584"
+        accessibilityLabel="Learn more about this purple button"
+        />
+        </View>
         <View style={styles.versionBox}>
           <Text style={styles.versionText}>RN {reactNativeVersionString}, RNM: {reactNativeMapsVersion}, RNMD: {reactNativeMapsDirectionsVersion}</Text>
         </View> 
@@ -159,4 +171,26 @@ class App extends React.Component {
     );
   }
 }
-export default App;
+const styles = StyleSheet.create({
+  versionBox: {
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+  },
+  versionText: {
+    padding: 4,
+    backgroundColor: '#FFF',
+    color: '#000',
+  },
+  container: {
+    flex: 1,
+    alignItems: 'center'
+  },
+  bottom: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    marginBottom: 36
+  }
+});
