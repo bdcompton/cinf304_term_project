@@ -13,8 +13,8 @@
       "package": "com.stetson.campuscrawler",
       "versionCode": 1
     },
-    "description": "Campus Crawler project for CINF304",
-    "githubUrl": "https://github.com/bdcompton/cinf304_term_project"
+    "description": "Campus Crawler project for Senior Project 2",
+    "githubUrl": "https://github.com/bdcompton/senior_project_2_Campus_Crawler"
   },
   "version": "1.0.0",
   "orientation": "portrait",
@@ -34,5 +34,5 @@
     "supportsTablet": true
   },
   "description": "",
-  "githubUrl": "https://github.com/bdcompton/cinf304_term_project"
+  "githubUrl": "https://github.com/bdcompton/senior_project_2_Campus_Crawler"
 }
