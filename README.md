@@ -1,4 +1,4 @@
-# cinf304_termproject
+# senior_project_2_Campus_Crawler
 
 ## Instructions to launch app
 
