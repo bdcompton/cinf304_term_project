@@ -14,7 +14,8 @@
       "versionCode": 1
     },
     "description": "Campus Crawler project for Senior Project 2",
-    "githubUrl": "https://github.com/bdcompton/senior_project_2_Campus_Crawler"
+    "githubUrl": "https://github.com/bdcompton/senior_project_2_Campus_Crawler",
+    "entryPoint": "node_modules/expo/AppEntry.js"
   },
   "version": "1.0.0",
   "orientation": "portrait",

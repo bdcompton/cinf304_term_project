@@ -1,5 +1,5 @@
 import React, { Component,useState } from 'react';
-import { Dimensions, Platform, StyleSheet, Text, View, Button } from 'react-native';
+import { Dimensions, Platform, StyleSheet, Text, View, Button, Alert } from 'react-native';
 import MapView, {
   Marker,
   AnimatedRegion,
@@ -8,9 +8,10 @@ import MapView, {
 } from "react-native-maps";
 import { Callout } from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
-import BackgroundGeolocation from "react-native-background-geolocation";
-import * as Location from 'expo-location';
-import * as Permissions from 'expo-permissions';
+import Geolocation from "react-native-geolocation-service";
+import {requestMultiple, PERMISSIONS} from 'react-native-permissions';
+// import * as Location from 'expo-location';
+// import * as Permissions from 'expo-permissions';
 
 import locationData from './locations.json';
 import Picker1 from './Picker.js';
@@ -42,6 +43,9 @@ export default class App extends React.Component {
     this.state = {
       names: [locationData.name],
       positions: [locationData.position],
+      latitude: 0,
+      longitude: 0,
+      markerCoordinates: [],
       coordinates: [
         "Flagler Hall, Deland, FL, USA",
         "Sage Hall, Deland, FL, USA",
@@ -52,6 +56,35 @@ export default class App extends React.Component {
     
   }
 
+  componentDidMount(){
+    requestMultiple([PERMISSIONS.ANDROID.ACCESS_COARSE_LOCATION, PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION]).then(
+      (statuses) => {
+        console.log('Coarse', statuses[PERMISSIONS.ANDROID.ACCESS_COARSE_LOCATION]);
+        console.log('Fine', statuses[PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION]);
+      },
+    );
+    Geolocation.getCurrentPosition(
+      position => {
+        this.setState({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+          markerCoordinates: this.state.markerCoordinates.concat({
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude
+          })
+        });
+      },
+      error => {
+        Alert.alert(error.message.toString());
+      },
+      {
+        showLocationDialog: true,
+        enableHighAccuracy: true,
+        timeout: 20000,
+        maximumAge: 0
+      }
+    );
+  }
   onChange = (itemValue, itemIndex) => {  
     // Set the state here and update as required
   }
@@ -59,8 +92,8 @@ export default class App extends React.Component {
   onMapPress = (e) => {
     this.setState({
       coordinates: [
-        this.state.coordinates[0],
-        e.nativeEvent.coordinate,
+        e.nativeEvent.coordinate,,
+        this.state.coordinates[1]
       ],
     });
   }
@@ -124,8 +157,8 @@ export default class App extends React.Component {
          provider={PROVIDER_GOOGLE}
          showsUserLocation
          initialRegion={{
-         latitude: LATITUDE,
-         longitude: LONGITUDE,
+         latitude: this.state.latitude,
+         longitude: this.state.latitude,
          latitudeDelta: LATITUDE_DELTA,
          longitudeDelta: LONGITUDE_DELTA}}
          style={StyleSheet.absoluteFill}
@@ -150,6 +183,7 @@ export default class App extends React.Component {
             }}
             resetOnChange={false}
           />
+         
         </MapView>
         <Callout>
         <Picker1 parentCallBack={this.callback}/>
