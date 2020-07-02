@@ -34,7 +34,7 @@ const Pick = ({parentCallBack}) => {
   );
 };
 const styles = StyleSheet.create({
-  //Check project repo for styles
+  
 });
 
 export default Pick;

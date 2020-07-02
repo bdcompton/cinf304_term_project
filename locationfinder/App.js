@@ -47,8 +47,6 @@ export default class App extends React.Component {
       longitude: 0,
       markerCoordinates: [],
       coordinates: [
-        "Flagler Hall, Deland, FL, USA",
-        "Sage Hall, Deland, FL, USA",
       ],
     };
     
