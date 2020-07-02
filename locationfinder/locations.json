@@ -1,5 +1,9 @@
 {"locations": [
     {
+        "name": "Pick Location",
+        "position": ""
+    },
+    {
         "name": "Allen Hall",
         "position": "Alen Hall, Deland, FL, USA"
     },

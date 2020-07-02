@@ -65,9 +65,14 @@ export default class App extends React.Component {
     );
     Geolocation.getCurrentPosition(
       position => {
+        this.setState({coordinates: []});
         this.setState({
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
+          coordinates: this.state.coordinates.concat({
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude
+          }),
           markerCoordinates: this.state.markerCoordinates.concat({
             latitude: position.coords.latitude,
             longitude: position.coords.longitude
@@ -142,11 +147,34 @@ export default class App extends React.Component {
   }
 
   buttonCallback = () => {
-    this.setState({coordinates: []});
+    Geolocation.getCurrentPosition(
+      position => {
+        this.setState({coordinates: []});
+        this.setState({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+          coordinates: this.state.coordinates.concat({
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude
+          }),
+        
+        });
+      },
+      error => {
+        Alert.alert(error.message.toString());
+      },
+      {
+        showLocationDialog: true,
+        enableHighAccuracy: true,
+        timeout: 20000,
+        maximumAge: 0
+      }
+    );
     this.forceUpdate();
   }
 
   render() {
+    console.disableYellowBox = true;
 
     return (
       
@@ -186,9 +214,11 @@ export default class App extends React.Component {
          
         </MapView>
         <Callout>
+        <View style={styles.picker}>
         <Picker1 parentCallBack={this.callback}/>
-        <Picker2 parentCallBack={this.callback2}/>
+        {/* <Picker2 parentCallBack={this.callback2}/> */}
         <Picker3 parentCallBack={this.callback3}/>
+        </View>
         </Callout>
         <View style={styles.bottom}>
         <Button
@@ -217,6 +247,10 @@ const styles = StyleSheet.create({
     padding: 4,
     backgroundColor: '#FFF',
     color: '#000',
+  },
+  picker: {
+    backgroundColor: '#9FA8DA',
+    opacity: .8
   },
   container: {
     flex: 1,

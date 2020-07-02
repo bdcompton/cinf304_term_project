@@ -13,7 +13,9 @@ const Pick = ({parentCallBack}) => {
     <View >
      
       <View>
-        
+      <Text style={styles.text}>
+          Add Building to Path
+        </Text>
         <Picker
           selectedValue={currency}
           onValueChange={currentCurrency => parentCallBack(currentCurrency)}>
@@ -25,16 +27,16 @@ const Pick = ({parentCallBack}) => {
                  })
         }
         </Picker>
-        <Text>
-          Add another building to path
-        </Text>
+        
       </View>
     </View>
     
   );
 };
 const styles = StyleSheet.create({
-  //Check project repo for styles
+  text: {
+    fontSize:18
+  }
 });
 
 export default Pick;
