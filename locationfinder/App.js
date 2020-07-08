@@ -48,6 +48,8 @@ export default class App extends React.Component {
       markerCoordinates: [],
       coordinates: [
       ],
+      eta: 0,
+      distance: 0,
     };
     
     this.mapView = null;
@@ -102,6 +104,12 @@ export default class App extends React.Component {
   }
 
   onReady = (result) => {
+    console.log(`Distance: ${result.distance} km`)
+    console.log(`Duration: ${result.duration} min.`)
+    var eta = result.duration.toFixed(0);
+    var distance = (result.distance * .62137).toFixed(2);
+    this.setState({eta: eta,
+    distance: distance})
     this.mapView.fitToCoordinates(result.coordinates, {
       edgePadding: {
         right: (width / 10),
@@ -209,7 +217,9 @@ export default class App extends React.Component {
             }}
             resetOnChange={false}
           />
-         
+          {/* {!!this.state.coordinates[1] && <MapView.Marker
+         coordinate={this.state.coordinate[this.state.coordinates.length - 1],this.state.coordinate[this.state.coordinates.length - 1]}
+       />} */}
         </MapView>
         <Callout>
         <View style={styles.picker}>
@@ -219,6 +229,12 @@ export default class App extends React.Component {
         </View>
         </Callout>
         <View style={styles.bottom}>
+          <Text style={styles.timeText}>
+            Estimated Travel Time : {this.state.eta} minutes
+          </Text>
+          <Text style={styles.timeText}>
+            Total Distance : {this.state.distance} miles
+          </Text>
         <Button
         onPress={this.buttonCallback}
         title="Reset path"
@@ -241,13 +257,18 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-end',
   },
+  timeText: {
+    fontSize: 20,
+    color: '#000',
+
+  },
   versionText: {
     padding: 4,
     backgroundColor: '#FFF',
     color: '#000',
   },
   picker: {
-    backgroundColor: '#9FA8DA',
+    backgroundColor: '#778899',
     opacity: .8
   },
   container: {
