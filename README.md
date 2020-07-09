@@ -4,7 +4,7 @@
 ## Before cloning, ensure that local environment variables are set up for java and android
 
 ### 1. Clone repository
-### 2. Create file local.properties and add line sdk.dir=(YOUR_PATH_TO_ANDROID_SDK)
+### 2. Create file local.properties in /locationfinder/android/ and add line sdk.dir=(YOUR_PATH_TO_ANDROID_SDK)
 ### 3. Open up a terminal of your choice, change directory to /locationfinder/ and run:
 ```console
 npm install
