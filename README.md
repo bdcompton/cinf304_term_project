@@ -5,7 +5,7 @@
 
 ### 1. Clone repository
 ### 2. Create file local.properties and add line sdk.dir=(YOUR_PATH_TO_ANDROID_SDK)
-### 3. Open up a terminal of your choice and run:
+### 3. Open up a terminal of your choice, change directory to /locationfinder/ and run:
 ```console
 npm install
 npm run android
