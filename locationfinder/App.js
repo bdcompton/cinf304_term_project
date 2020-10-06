@@ -26,7 +26,7 @@ const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
 
-const GOOGLE_MAPS_APIKEY = 'AIzaSyDgin3KRnxNZ6qGnvBoI8bbDxDykNqxgMU';
+const GOOGLE_MAPS_APIKEY = 'YOUR_API_KEY';
 
 import { NativeModules } from 'react-native';
 const reactNativeVersion = NativeModules.PlatformConstants.reactNativeVersion;
