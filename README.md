@@ -1,4 +1,4 @@
-# senior_project_2_Campus_Crawler
+# senior_project_Campus_Crawler
 
 ## Instructions to launch app
 ## Before cloning, ensure that local environment variables are set up for java and android
